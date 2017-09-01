@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
   end
 
   # This creates a shared (synced) folder from the host in the guest. Customize it at will, or add new ones.
-  config.vm.synced_folder '.', '/home/vagrant/host'
+  config.vm.synced_folder 'E:/Facu/Ruby/VM/practicas-ruby-ttps/', '/home/vagrant/host'
 
   # Provision the box with a shell script. This installs rbenv + ruby-build and Ruby (+ dependencies).
   user = 'vagrant'
