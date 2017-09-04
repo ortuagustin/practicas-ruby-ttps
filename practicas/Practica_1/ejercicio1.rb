@@ -1,10 +1,3 @@
-#  Investigá y probá en un intérprete de Ruby cómo crear objetos de los siguientes tipos
-#  básicos usando literales y usando el constructor new (cuando sea posible):
-#  1. Arreglo (Array)
-#  2. Diccionario o hash (Hash)
-#  3. String (String)
-#  4. Símbolo (Symbol)
-
 array = [1, 2, 3] # => [1, 2, 3]
 array = Array.new # => []
 array[0] = 1 #=> [1]
