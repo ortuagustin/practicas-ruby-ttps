@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0",
+  "tasks": [
+    {
+      "taskName": "run-test-line",
+      "command": "test_launcher",
+      "args": [
+        "${file}:${lineNumber}"
+      ]
+    },
+    {
+      "taskName": "run-test-file",
+      "command": "test_launcher",
+      "args": [
+        "${file}"
+      ]
+    },
+    {
+      "taskName": "rerun-last-test",
+      "command": "test_launcher",
+      "args": [
+        "--rerun"
+      ]
+    }
+  ]
+}
