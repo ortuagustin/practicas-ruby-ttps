@@ -14,4 +14,16 @@ class TestContar < MiniTest::Test
     actual = ContarPalabras.contar 'A', 'a'
     assert_equal expected, actual
   end
+
+  def test_contar_substr_multiple_times
+    expected = 2
+    actual = ContarPalabras.contar 'a a', 'a'
+    assert_equal expected, actual
+  end
+
+  def test_contar_sample
+    expected = 5
+    actual = ContarPalabras.contar 'La casa de la esquina tiene la puerta roja y la ventana blanca.', 'la'
+    assert_equal expected, actual
+  end
 end
