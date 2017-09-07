@@ -19,4 +19,18 @@ class TestOperacionesString < MiniTest::Test
     actual = 'Hello world'.codepoints
     assert_equal expected, actual
   end
+
+
+  def test_vowels_to_numbers
+    expected = '43106'
+    actual = 'aeiou'.downcase.gsub(
+        /[aeiou]/,
+        'a' => '4',
+        'e' => '3',
+        'i' => '1',
+        'o' => '0',
+        'u' => '6')
+
+    assert_equal expected, actual
+  end
 end
