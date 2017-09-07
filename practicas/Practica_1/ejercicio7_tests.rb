@@ -15,8 +15,8 @@ class TestOperacionesString < MiniTest::Test
   end
 
   def test_chars_to_ascii
-    expected = '72 101 108 108 111 32 119 111 114 108 100'
-    actual = 'Hello world'.each_byte.reduce('') { |memo, c| memo  << "#{c.to_s} " }.strip
+    expected = [72, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100]
+    actual = 'Hello world'.codepoints
     assert_equal expected, actual
   end
 end
