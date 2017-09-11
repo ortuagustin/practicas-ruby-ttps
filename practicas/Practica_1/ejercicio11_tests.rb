@@ -9,6 +9,12 @@ class TestHashToHtmlList < MiniTest::Test
     assert_equal expected, actual
   end
 
+  def test_one_element_hash
+    expected = '<ul><li>perros: 1</li></ul>'
+    actual = a_ul ({ "perros": '1'})
+    assert_equal expected, actual
+  end
+
   def test_sample_hash
     expected = '<ul><li>perros: 1</li><li>gatos: 1</li><li>peces: 0</li></ul>'
     actual = a_ul ({ "perros": '1', "gatos": '1', "peces": '0' })
