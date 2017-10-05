@@ -1,3 +1,3 @@
 def ordenar_arreglo *numbers
-  Array.new(numbers).sort
+  numbers.sort
 end
