@@ -16,7 +16,6 @@ class TestFibonacciGenerator < MiniTest::Test
   end
 
   def test_fibonacci_up_to_10
-
     expected = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
     actual = fibonacci.first(10)
     assert_equal expected, actual
