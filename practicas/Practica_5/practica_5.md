@@ -328,10 +328,23 @@ rails generate controller PoliteController salute
       * `empty`: Devuelve las oficinas que están disponibles (`available = true`) que no tienen empleados asignados.
 9. Sobre *scaffold controllers*:
    1. ¿Qué son? ¿Qué operaciones proveen sobre un modelo?
+
+  Son controladores que ya asumen que el modelo existe, por eso el generador `scaffold_controller` no crea el modelo ni su migracion. Crea un recurso RESTful, con los 7 metodos en el controlador, asi como tambien las vistas necesarias. No genera las rutas
+
    2. ¿Con qué comando se generan?
+
+  rails g scaffold_controller
+
    3. Utilizando el generator anterior, generá un controlador de scaffold para el modelo `Office` y otro para el modelo
       `Employee`.
+
+  rails g scaffold_controller Office
+  rails g scaffold_controller Employee
+
    4. ¿Qué rutas agregó este generator?
+
+  Ninguna
+
    5. Analizá el código que se te generó para los controllers y para las vistas, y luego modificalo para que no permita
       el borrado de ninguno de los elementos. ¿Qué cambios debés hacer para que las vistas no muestren la opción, el
       controller no tenga la acción `destroy` y las rutas de borrado dejen de existir en la aplicación?
