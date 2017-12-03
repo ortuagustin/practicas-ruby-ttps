@@ -241,14 +241,43 @@ rails generate controller PoliteController salute
 ## ActiveRecord (AR)
 
 1. ¿Cómo se define un modelo con ActiveRecord? ¿Qué requisitos tienen que cumplir las clases para utilizar la lógica de abstracción del acceso a la base de datos que esta librería ofrece?
+
+  Se debe definir una subclase de `ActiveRecord::Base`, o más recientemente en Rails, `ApplicationRecord`. Los modelos (tanto las clases Ruby como las tablas en la base de datos) deben seguir una serie de normas o convenciones, sobre todo en los nombres de las clases, las tablas, y los atributos o campos de las mismas. para que el mapeo funcione correctamente (aunque también es posible configurarlo manualmente)
+
 2. ¿De qué forma *sabe* ActiveRecord qué campos tiene un modelo?
+
+  Inspeccionando la tabla a la que esta asociado en la base de datos, puede obtener el nombre de las columnas y crear dinamicamente los accesors para el modelo
+
 3. ¿Qué metodos (*getters* y *setters*) genera AR para los campos escalares básicos (`integer`, `string`, `text`, `boolean`, `float`)?
+
+  Genera un getter y setter con el nombre del campo según cómo esté definido en la BD, es decir, `<attribute>` y `<attribute>=`. Además, agrega también `<attribute>?`, que sirve para determinar si el atributo está presente o no
+
+  Tambien existen los valores raw de los atributos antes de que sean castedos segun el tipo de campo. Estos se pueden acceder con los accessors `<attribute>_before_type_cast`
+
 4. ¿Qué convención define AR para inferir los nombres de las tablas a partir de las clases Ruby? Citá ejemplos.
+
+  La convención es, se `singulariza` el nombre de la clase Ruby, y despues lo pasa a `snake_case`. Ejemplos:
+  * `Product` --> `products`
+  * `PostComment` --> `post_comments`
+  * `SystemSetting` --> `system_settings`
+
 5. Sobre las migraciones de AR:
    1. ¿Qué son y para qué sirven?
+
+    Son una DSL que permiten modificar la estructura de una base de datos a lo largo del tiempo, de manera facil y consistente. Evita tener que escribir SQL directamente, (son independientes del motor SQL subyacente). Esto permite "versionar" de alguna manera, el esquema de la base de datos. Es posible moverse "para adelante" o "para atrás" en este esquema, en cualquier momento. ActiveRecord tiene implementada la lógica necesaria para saber que migración aplicó, y también sabe deshacerlas
+
    2. ¿Cómo se generan?
    3. ¿Dónde se guardan en el proyecto?
    4. ¿Qué organización tienen sus nombres de archivo?
+
+    Se crea un archivo de código Ruby, se subclasea `ActiveRecord::Migration` y se implementa el método `change` (en algunos casos se debe implementar los metodos `up` y `down` en lugar de `change`). La manera más conveniente de crear una nueva migración es usando un generador: `rails generate migration`
+
+    Se almacenan en el directorio `db/migrate`
+
+    El nombre del archivo debe comenzar con el `timestamp` de cuando fue creada la migración, esto permite aplicarlas en el orden correcto, y además, desde "dónde" comenzar a aplicar las migraciones; luego del timestamp y seguido de un guion bajo, va el nombre de la migración, que debe coincidir con el nobmre de la clase que implementa dicha migración. Ejemplo:
+
+    YYYYMMDDHHMMSS_create_products.rb --> CreateProducts < ActiveRecord::Migration [...]
+
    5. Generá una migración que cree la tabla `offices` con los siguientes atributos:
       * `name`: `string` de `255` caracteres, no puede ser nulo.
       * `phone_number`: `string` de `30` caracteres, no puede ser nulo.
@@ -261,9 +290,26 @@ rails generate controller PoliteController salute
    * `office_id`: `integer`, foreign key hacia `offices`.
 7. Agregá una asociación entre `Employee` y `Office` acorde a la columna `office_id` que posee la tabla `employees`.
    1. ¿Qué tipo de asociación declaraste en la clase `Employee`?
+
+    belongs_to :office
+
    2. ¿Y en la clase `Office`?
+
+    Nada
+
    3. ¿Qué métodos generó AR en el modelo a partir de esto?
+
+    Nada, aunque los accessors los va a generar dinamicamente
+
    4. Modificá el mapeo de rutas de tu aplicación Rails para que al acceder a `/` se vaya al controller definido antes (`polite#salute`).
+
+```Ruby
+  Rails.application.routes.draw do
+    root to: 'polite#salute'
+    # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  end
+```
+
 8. Sobre *scopes*:
    1. ¿Qué son los scopes de AR? ¿Para qué los utilizarías?
    2. Investigá qué diferencia principal existe entre un método estático y un scope.
