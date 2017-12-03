@@ -312,7 +312,15 @@ rails generate controller PoliteController salute
 
 8. Sobre *scopes*:
    1. ¿Qué son los scopes de AR? ¿Para qué los utilizarías?
+
+  Consiste en encapsular en un metodo de una clase, una consulta al modelo, de modo tal que sea mas facil reutilizarla; evita tener que reescribir las diferentes condiciones (where) y joins. Es útil para consultas que son comunes. Los scopes tambien son anidables entre si, y también se puede continuar encadenando metodos `where`, `join`, etc
+
+  Ejemplo en http://guides.rubyonrails.org/active_record_querying.html#scopes
+
    2. Investigá qué diferencia principal existe entre un método estático y un scope.
+
+  Los scopes siembre deben retornar un objeto de tipo `ActiveRecord::Relation`. Esto puede causar problemas si se usan condicionales. Si se utiliza `scope`, esto es manejado automáticamente, mientras que un metodo de clase podría retornar `nil`
+
    3. Agregá los siguientes scopes al modelo `Employee`:
       * `vacant`: Filtra los empleados para quedarse únicamente con aquellos que no tengan una oficina asignada (*asociada*).
       * `occupied`: Complemento del anterior, devuelve los empleados que sí tengan una oficina asignada.
