@@ -349,6 +349,9 @@ rails generate controller PoliteController salute
       el borrado de ninguno de los elementos. ¿Qué cambios debés hacer para que las vistas no muestren la opción, el
       controller no tenga la acción `destroy` y las rutas de borrado dejen de existir en la aplicación?
 
+  Se debe eliminar los metodos `#destroy` de los controllers
+  Se debe eliminar la linea que contiene `link_to 'Destroy'` de las vistas `index.html.erb`
+
 ## ActiveModel (AM)
 
 1. ¿Qué son los validadores de AM?
