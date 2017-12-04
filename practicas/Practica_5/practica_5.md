@@ -355,9 +355,33 @@ rails generate controller PoliteController salute
 ## ActiveModel (AM)
 
 1. ¿Qué son los validadores de AM?
+
+  Se usan para chequear el estado de los modelos antes de que estos sean persistidos en la BD. Los métodos de persistencia (create, save, update) las ejecutan, y si alguna falla, el modeo no se persiste y los métodos nombrados devuelven false. Esto permite garantizar que siempre guarden datos válidos en la BD (ojo, hay métodos que no consideran las validaciones!! --> ver https://ttps-ruby.github.io/teoria/#/18/33)
+  Los metodos #valid? e #invalid? ejecutarán las validaciones
+  Se puede acceder al atributo #errors de un modelo para consular las validaciones que fallaron; el atributo #errors.messages es la coleccoion los mensajes de error, indexada por el campo (atributo del modelo) con errores.
+
 2. Agregá a los modelos `Office` y `Employee` las validaciones necesarias para hacer que sus atributos cumplan las restricciones definidas para las columnas de la tabla que cada uno representa.
 3. Validadores personalizados:
     1. ¿Cómo podés definir uno para tus modelos AR?
+
+  Hay varias formas de hacerlo, usando las opciones `:if` o `:unless`
+  - Indicando, con un simbolo, el nombre del metodo que el validador debe ejecutar
+  - Pasandole un `proc`, para definir el comportamiento del validador sin la necesidad de crear un método
+  - Un string que se interpretará como código Ruby
+  - Un array, que combina múltiples condiciones
+
+  Ejemplos en
+  http://guides.rubyonrails.org/active_record_validations.html#conditional-validation
+  https://ttps-ruby.github.io/teoria/#/18/47
+
+  Tambien es posible usar clases dedicadas que implementan la lógica de validación. Esto se hace subclaseando `ActiveModel::Validator`. Esta clase deberá implementar el método `validate(record)`. En el modelo, se debe indicar que se utiliza un validador personalizado usando `validates_with NombreClaseValidador`
+
+    http://guides.rubyonrails.org/active_record_validations.html#custom-validators
+
+    Por último, existe la posibilidad de definir métodos de validación en el modelo, que además agregan mensajes en la coleccion #errors. Estos métodos deben registrarse usando el metodo de clase `validate` y la lista de simbolos que corresponde a los métodos de validación
+
+    http://guides.rubyonrails.org/active_record_validations.html#custom-methods
+
     2. Implementá un validador que chequee que un string sea un número telefónico con un formato válido para la
        Argentina.
     3. Agregá el validador que definiste en el punto anterior a tu modelo `Office` para validar el campo `phone_number`.
