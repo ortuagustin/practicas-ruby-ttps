@@ -371,16 +371,17 @@ rails generate controller PoliteController salute
   - Un array, que combina múltiples condiciones
 
   Ejemplos en
-  http://guides.rubyonrails.org/active_record_validations.html#conditional-validation
-  https://ttps-ruby.github.io/teoria/#/18/47
+  >http://guides.rubyonrails.org/active_record_validations.html#conditional-validation
+
+  >https://ttps-ruby.github.io/teoria/#/18/47
 
   Tambien es posible usar clases dedicadas que implementan la lógica de validación. Esto se hace subclaseando `ActiveModel::Validator`. Esta clase deberá implementar el método `validate(record)`. En el modelo, se debe indicar que se utiliza un validador personalizado usando `validates_with NombreClaseValidador`
 
-    http://guides.rubyonrails.org/active_record_validations.html#custom-validators
+  >http://guides.rubyonrails.org/active_record_validations.html#custom-validators
 
-    Por último, existe la posibilidad de definir métodos de validación en el modelo, que además agregan mensajes en la coleccion #errors. Estos métodos deben registrarse usando el metodo de clase `validate` y la lista de simbolos que corresponde a los métodos de validación
+  Por último, existe la posibilidad de definir métodos de validación en el modelo, que además agregan mensajes en la coleccion #errors. Estos métodos deben registrarse usando el metodo de clase `validate` y la lista de simbolos que corresponde a los métodos de validación
 
-    http://guides.rubyonrails.org/active_record_validations.html#custom-methods
+ > http://guides.rubyonrails.org/active_record_validations.html#custom-methods
 
     2. Implementá un validador que chequee que un string sea un número telefónico con un formato válido para la
        Argentina.
@@ -389,11 +390,31 @@ rails generate controller PoliteController salute
 ## Internacionalización (i18n) y localización (l10n)
 
 1. ¿A qué hacen referencia estos conceptos?
+
+  **Localización**: Es la adaptación del software para que contemple los aspectos del lenguaje, cultura y otros requisitos de un mercado(`locale`) específico. Esto implica más que traducir la interfaz de usuario, ya que debe tener en cuenta: formato de números, fechas, horas, moneda, teclado, collation, simbolos, colores, iconos, asi como también la adaptación de textos o imagenes que en determinada cultura puedan ser interpretados de manera equívocada o sean incluso ofensivos, requerimientos legales, fechas, dias u eventos especiales, entre muchas mas cosas
+
+  **Internacionalización**: Es una forma de diseñar y desarrollar el software de modo tal que sea **posible** `localizar` fácilmente el contenido, dependiendo de los usuarios del software, que pueden variar en su cultura, región o idioma
+
+  https://blog.mozilla.org/l10n/2011/12/14/i18n-vs-l10n-whats-the-diff/
+  https://www.w3.org/International/questions/qa-i18n
+
 2. Investigá qué dos metodos provee la clase `I18n` para realizar la traducción (i18n) y la localización (l10n).
+
+  Hay dos métodos que provee la `API I18n`:
+  * **translate** # Lookup text translations. Tiene un alias, `I18n.t`
+  * **localize**  # Localize Date and Time objects to local formats. Tiene un alias, `I18n.l`
+
+  Existen una serie de atributos más para configurar la internacionalización, ver
+
+  > http://guides.rubyonrails.org/i18n.html#the-public-i18n-api
+
 3. Modificá el controller `PoliteController` que creaste antes para que utilice traducciones al imprimir el mensaje de saludo.
 4. Modificá los controllers de scaffold que generaste para que utilicen i18n, tanto en las vistas como en los mensajes flash del controller.
 
    > Tip: Investigá qué helper provee Rails en las vistas para las traducciones.
+
+   Los helper son: `translate` y su alias `t`; `localize` y su alias `l`
+   <%=t :symbol %>
 
 ## Referencias
 
